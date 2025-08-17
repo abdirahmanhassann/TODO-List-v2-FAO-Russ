@@ -9,7 +9,7 @@ namespace TODO_LIST_v2.Controllers
 {
     public static class SignUpLogic
     {
-        public static void SignUp(Signup SignUp) {
+        public static bool SignUp(Signup SignUp) {
             string str = "Data Source=LAPTOP-KFNM01SG\\SQLEXPRESS;Initial Catalog=Project1;"
             + "Integrated Security=True;TrustServerCertificate=True;";
             string duplicateLoginIDCheck = $"SELECT * FROM dbo.users where loginID='{SignUp.userName}'";
@@ -18,10 +18,12 @@ namespace TODO_LIST_v2.Controllers
             {
                 InsertNewUser(SignUp);
                 MessageBox.Show($"Welcome {SignUp.name}!");
+                return true;
             }
             else
             {
                 MessageBox.Show($"Username already exists, Please pick a unique username");
+                return false;
             }
             Console.WriteLine(dbResults);
         }

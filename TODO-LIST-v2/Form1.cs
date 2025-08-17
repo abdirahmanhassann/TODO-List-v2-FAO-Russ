@@ -55,7 +55,13 @@ namespace TODO_LIST_v2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SigninLogic.SignIn(Signin);
+           bool isSignedIn=SigninLogic.SignIn(Signin);
+            if (isSignedIn)
+            {
+                Form2 form2 = new Form2(Signin);
+                form2.Show();
+                this.Hide();
+            }
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -70,7 +76,14 @@ namespace TODO_LIST_v2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SignUpLogic.SignUp(Signup);
+            bool isSignedUp =SignUpLogic.SignUp(Signup);
+            if (isSignedUp)
+            {
+                Form2 form2 = new Form2(Signup);
+                form2.Show();
+                this.Hide();
+            }
+
         }
     }
 }

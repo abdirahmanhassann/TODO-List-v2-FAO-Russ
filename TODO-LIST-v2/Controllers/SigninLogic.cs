@@ -10,7 +10,7 @@ namespace TODO_LIST_v2.Controllers
     public static class SigninLogic
     {
 
-        public static void SignIn(Signin SignIn) {
+        public static bool SignIn(Signin SignIn) {
             string str = "Data Source=LAPTOP-KFNM01SG\\SQLEXPRESS;Initial Catalog=Project1;"
 + "Integrated Security=True;TrustServerCertificate=True;";
             
@@ -20,12 +20,14 @@ namespace TODO_LIST_v2.Controllers
             if (dbResults.Count == 0)
             {
                 MessageBox.Show("Wrong Username or Password");
+                return false;
             }
             else
             {
                 MessageBox.Show($"Welcome! {dbResults[0][2]}");
+                return true;
             }
-                Console.WriteLine(dbResults);
+
         }
 
 
