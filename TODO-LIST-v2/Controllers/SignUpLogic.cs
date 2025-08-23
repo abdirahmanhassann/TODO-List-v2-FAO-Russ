@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,35 +10,28 @@ namespace TODO_LIST_v2.Controllers
 {
     public static class SignUpLogic
     {
-        public static bool SignUp(Signup SignUp) {
-            string str = "Data Source=LAPTOP-KFNM01SG\\SQLEXPRESS;Initial Catalog=Project1;"
-            + "Integrated Security=True;TrustServerCertificate=True;";
+        public static Signup SignUp(Signup SignUp) {
             string duplicateLoginIDCheck = $"SELECT * FROM dbo.users where loginID='{SignUp.userName}'";
-            List<List<object>> dbResults = DataBase.CreateCommand(duplicateLoginIDCheck, str);
-            if (dbResults.Count == 0)
+            string path = StaticPaths.dbPath();
+            Signup dbResults = DataBase.UserTable(duplicateLoginIDCheck,path);
+            if (dbResults == null || string.IsNullOrEmpty(dbResults.userName))
             {
                 InsertNewUser(SignUp);
                 MessageBox.Show($"Welcome {SignUp.name}!");
-                return true;
+                return dbResults;
             }
             else
             {
                 MessageBox.Show($"Username already exists, Please pick a unique username");
-                return false;
+                return null;
             }
-            Console.WriteLine(dbResults);
         }
-
-
-
         public static void InsertNewUser(Signup SignUp)
         {
-            string str = "Data Source=LAPTOP-KFNM01SG\\SQLEXPRESS;Initial Catalog=Project1;"
-            + "Integrated Security=True;TrustServerCertificate=True;";
-            string duplicateLoginIDCheck = $"INSERT into dbo.users (loginID,name,password) " +
+            string path= StaticPaths.dbPath();
+            string insertIntoNewUser = $"INSERT into dbo.users (loginID,name,password) " +
             $"values ('{SignUp.userName}','{SignUp.name}','{SignUp.password}')";
-            List<List<object>> dbResults = DataBase.CreateCommand(duplicateLoginIDCheck, str);
-
+            Signup dbResults = DataBase.UserTable(insertIntoNewUser, path);
         }
 
     }

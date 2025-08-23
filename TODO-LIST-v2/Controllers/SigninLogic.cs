@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +11,21 @@ namespace TODO_LIST_v2.Controllers
     public static class SigninLogic
     {
 
-        public static bool SignIn(Signin SignIn) {
-            string str = "Data Source=LAPTOP-KFNM01SG\\SQLEXPRESS;Initial Catalog=Project1;"
-+ "Integrated Security=True;TrustServerCertificate=True;";
-            
+        public static Signup SignIn(Signin SignIn) {
+            string path = StaticPaths.dbPath();
             string SignInCheck = $"SELECT * FROM dbo.users where loginID='{SignIn.userName}' and password='{SignIn.password}'";
 
-            List<List<object>> dbResults= DataBase.CreateCommand(SignInCheck,str);
-            if (dbResults.Count == 0)
+            Signup dbResults = DataBase.UserTable(SignInCheck, path);
+
+            if (dbResults == null || string.IsNullOrEmpty(dbResults.userName))
             {
                 MessageBox.Show("Wrong Username or Password");
-                return false;
+                return null;
             }
             else
             {
-                MessageBox.Show($"Welcome! {dbResults[0][2]}");
-                return true;
+                MessageBox.Show($"Welcome! {dbResults.name}");
+                return dbResults;
             }
 
         }

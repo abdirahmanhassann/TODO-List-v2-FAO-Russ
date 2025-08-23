@@ -1,8 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.DirectoryServices;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TODO_LIST_v2.Models;
@@ -18,28 +20,35 @@ namespace TODO_LIST_v2.Controllers
 
 
 
-        public static List<List<object>> CreateCommand(string queryString, string connectionString)
+        public static Signup UserTable(string queryString, string connectionString)
         {
-            var results = new List<List<object>>();
+            DataTable dataTable = new DataTable();
+            Signup results= new Signup();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var row = new List<object>();
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            row.Add(reader[i]);
-                        }
-                        results.Add(row);
-                    }
-                }
-                command.ExecuteNonQuery();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(queryString, connection);
+                dataAdapter.Fill(dataTable);
+            }
+            foreach (DataRow row in dataTable.Rows)
+            {
+                results.ID = Convert.ToInt16(row["id"]);
+                results.userName = row["loginID"].ToString();
+                results.name = row["name"].ToString();
+                results.password = row["password"].ToString();
             }
             return results;
+        }
+        public static void ModifyTasks(string queryString, string connectionString)
+        { 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+            return;
         }
 
     }
