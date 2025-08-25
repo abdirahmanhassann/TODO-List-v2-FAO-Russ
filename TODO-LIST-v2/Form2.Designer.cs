@@ -35,6 +35,9 @@
             label3 = new Label();
             button1 = new Button();
             sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
+            listBox = new ListBox();
+            textBox3 = new TextBox();
+            button2 = new Button();
             SuspendLayout();
             // 
             // textBox1
@@ -48,7 +51,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(171, 27);
+            label1.Location = new Point(171, 30);
             label1.Name = "label1";
             label1.Size = new Size(44, 25);
             label1.TabIndex = 1;
@@ -87,7 +90,7 @@
             // 
             button1.Location = new Point(21, 58);
             button1.Name = "button1";
-            button1.Size = new Size(194, 34);
+            button1.Size = new Size(369, 34);
             button1.TabIndex = 5;
             button1.Text = "save new task";
             button1.UseVisualStyleBackColor = true;
@@ -98,11 +101,45 @@
             sqlCommand1.CommandTimeout = 30;
             sqlCommand1.EnableOptimizedParameterBinding = false;
             // 
+            // listBox
+            // 
+            listBox.Enabled = false;
+            listBox.FormattingEnabled = true;
+            listBox.ItemHeight = 25;
+            listBox.Location = new Point(36, 145);
+            listBox.Name = "listBox";
+            listBox.Size = new Size(289, 254);
+            listBox.TabIndex = 6;
+            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
+            // 
+            // textBox3
+            // 
+            textBox3.AllowDrop = true;
+            textBox3.Location = new Point(389, 141);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(406, 185);
+            textBox3.TabIndex = 7;
+            textBox3.TextChanged += textBox3_TextChanged;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(389, 331);
+            button2.Name = "button2";
+            button2.Size = new Size(404, 68);
+            button2.TabIndex = 8;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
+            Controls.Add(textBox3);
+            Controls.Add(listBox);
             Controls.Add(button1);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -125,5 +162,8 @@
         private Label label3;
         private Button button1;
         private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
+        private ListBox listBox;
+        private TextBox textBox3;
+        private Button button2;
     }
 }

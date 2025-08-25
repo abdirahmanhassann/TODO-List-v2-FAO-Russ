@@ -16,9 +16,12 @@ namespace TODO_LIST_v2.Controllers
             Signup dbResults = DataBase.UserTable(duplicateLoginIDCheck,path);
             if (dbResults == null || string.IsNullOrEmpty(dbResults.userName))
             {
-                InsertNewUser(SignUp);
+                Signup results= InsertNewUser(SignUp);
+
+                string getNewUser = $"SELECT * FROM dbo.users where loginID='{SignUp.userName}'";
+                Signup newUser = DataBase.UserTable(getNewUser, path);
                 MessageBox.Show($"Welcome {SignUp.name}!");
-                return dbResults;
+                return newUser;
             }
             else
             {
@@ -26,12 +29,15 @@ namespace TODO_LIST_v2.Controllers
                 return null;
             }
         }
-        public static void InsertNewUser(Signup SignUp)
+
+
+        public static Signup InsertNewUser(Signup SignUp)
         {
             string path= StaticPaths.dbPath();
             string insertIntoNewUser = $"INSERT into dbo.users (loginID,name,password) " +
             $"values ('{SignUp.userName}','{SignUp.name}','{SignUp.password}')";
             Signup dbResults = DataBase.UserTable(insertIntoNewUser, path);
+            return dbResults;
         }
 
     }

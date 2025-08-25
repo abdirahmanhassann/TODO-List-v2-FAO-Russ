@@ -74,9 +74,8 @@ namespace TODO_LIST_v2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Signup isSignedUp =SignUpLogic.SignUp(Signup);
+            Signup isSignedUp = SignUpLogic.SignUp(Signup);
             if (isSignedUp == null || string.IsNullOrEmpty(isSignedUp.userName)) return;
-            
                 Form2 form2 = new Form2(isSignedUp);
                 form2.Show();
                 this.Hide();
