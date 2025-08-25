@@ -128,7 +128,7 @@
             button2.Name = "button2";
             button2.Size = new Size(404, 68);
             button2.TabIndex = 8;
-            button2.Text = "button2";
+            button2.Text = "Save Changes";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
